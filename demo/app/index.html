@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Glue Example</title>
+	<script type="text/javascript" src="../../dist/0.0.0/core.js"></script>
+	<script type="text/javascript" src="../lib/external/jQuery.js"></script>
+	<script type="text/javascript" src="../lib/glue.js"></script>
+
+</head>
+<body>
+USER: <h1 id="user"></h1>
+	<input type="text" name="name" id="txtName">
+
+	<br>
+	<input type="button" name="" id="click" value="click">
+
+	<script type="text/javascript">
+		// Gated View
+    var g = glue;
+		var btn = g.find("#click")[0];
+		var txt = g.find("#txtName")[0];
+		var userText = g.find("#user")[0];
+
+		// Mediator
+		var Core = Core || {};
+
+    function render() {
+      userText.innerHTML = Core.getState().name.name.toString();
+    }
+    // User provided action
+    const setUserActionCreator = name => ({
+      type: 'SET_NAME',
+      name,
+    });
+    // SignIn which is dependent on User
+    var signIn = function(){
+      render();
+    };
+    // SignIn subscribe so that if user changes he changes accordingly
+    Core.subscribe(signIn);
+    // On Click event User dispatches event that I am going to emit something cool
+    // so that all the subscribers get to know what just happened with user
+		g.on(btn, "click", function(){
+			Core.dispatch(setUserActionCreator(txt.value));
+		});
+
+		var obj = Optional.empty();
+
+
+		obj1 = Optional.ofNullable(obj);
+
+
+
+		/*
+		Lifecycle
+		Registeration
+
+		*/
+	</script>
+</body>
+</html>

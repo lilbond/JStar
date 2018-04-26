@@ -29,20 +29,7 @@ const setNameReducer = (state = {}, action) => {
       return state;
   }
 };
-const sayHIReducer = (state = {}, action) => {
-  console.log('State is', state, 'and action =>', action);
 
-  switch (action.type) {
-    case 'SAY':
-      return {
-        ...state,
-        message: action.message,
-      };
-
-    default:
-      return state;
-  }
-};
 const sighInReducer = (state = {}, action) => {
   console.log('State is', state, 'and action =>', action);
 
@@ -72,15 +59,10 @@ const thunkMiddleware = function ({ dispatch, getState }) {
 const finalStore = applyMiddleware(thunkMiddleware)(createStore);
 const store = finalStore(combineReducers({
   name: setNameReducer,
-  hi: sayHIReducer,
   user: setUserReducer,
   signIn: sighInReducer,
 }));
 
-const setNameActionCreator = name => ({
-  type: 'SET_NAME',
-  name,
-});
 
 
 const asyncSayActionCreator = function (message) {
@@ -93,10 +75,5 @@ const asyncSayActionCreator = function (message) {
     }, 2000);
   };
 };
-
-store.dispatch(setNameActionCreator('vik'));
-store.dispatch(asyncSayActionCreator('Hi'));
-
-store.getState();
 
 module.exports = store;
